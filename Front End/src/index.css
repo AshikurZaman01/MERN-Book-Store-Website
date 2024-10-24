@@ -2,3 +2,40 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* styles.css */
+
+.mySwiper .swiper-button-next,
+.mySwiper .swiper-button-prev {
+    background-color: white; /* Background color */
+    color: #333; /* Arrow color */
+    border-radius: 50%; /* Round shape */
+    width: 50px; /* Width of buttons */
+    height: 50px; /* Height of buttons */
+    display: flex; /* Flexbox for centering */
+    align-items: center; /* Center the icon vertically */
+    justify-content: center; /* Center the icon horizontally */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    transition: all 0.3s ease; /* Smooth transition */
+}
+
+.mySwiper .swiper-button-next:after,
+.mySwiper .swiper-button-prev:after {
+    font-size: 20px; /* Adjust icon size */
+}
+
+/* Change arrow color on hover */
+.mySwiper .swiper-button-next:hover,
+.mySwiper .swiper-button-prev:hover {
+    background-color: #f0f0f0; /* Light gray on hover */
+    color: #000; /* Darker arrow color on hover */
+    transform: scale(1.1); /* Slightly enlarge on hover */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3); /* Darker shadow on hover */
+}
+
+/* Customizing the disabled state */
+.mySwiper .swiper-button-disabled {
+    opacity: 0.5; /* Make disabled buttons less visible */
+    pointer-events: none; /* Prevent clicks */
+}

@@ -6,26 +6,26 @@ import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css/navigation';
+import { Autoplay } from 'swiper/modules';
 
-const BookList = ({ books, isLoading, error, selectedCategory }) => {
+const BookList = ({ books = [], isLoading, error, selectedCategory }) => {
     const filteredBooks = selectedCategory === "Choose a Genre"
         ? books
         : books?.filter(book => book.category === selectedCategory.toLowerCase());
 
-    console.log(filteredBooks);
 
-    if (isLoading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error.message}</p>;
-    if (!filteredBooks || filteredBooks.length === 0) return <p>No books available.</p>;
 
     return (
-        <Swiper navigation={true}
+        <Swiper
+            navigation={true}
             slidesPerView={1}
             spaceBetween={30}
             autoplay={{
                 delay: 2500,
                 disableOnInteraction: false,
+                pauseOnMouseEnter: true,
             }}
+            loop={true}
             breakpoints={{
                 640: {
                     slidesPerView: 1,
@@ -39,9 +39,8 @@ const BookList = ({ books, isLoading, error, selectedCategory }) => {
                     slidesPerView: 2.5,
                     spaceBetween: 50,
                 },
-
             }}
-            modules={[Pagination, Navigation]}
+            modules={[Pagination, Navigation, Autoplay]}
             className="mySwiper"
         >
             {filteredBooks.length > 0 && filteredBooks.map(book => (

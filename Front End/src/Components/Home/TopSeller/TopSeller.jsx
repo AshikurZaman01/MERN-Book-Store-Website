@@ -7,6 +7,7 @@ import { useState } from "react";
 
 const TopSeller = () => {
 
+    const [selectedCategory, setSelectedCategory] = useState('Choose a Genre');
 
     const { data: books, isLoading, error } = useQuery({
         queryKey: ['books'],
@@ -16,7 +17,6 @@ const TopSeller = () => {
         }
     })
 
-    const [selectedCategory, setSelectedCategory] = useState('Choose a Genre');
 
     return (
         <div>
