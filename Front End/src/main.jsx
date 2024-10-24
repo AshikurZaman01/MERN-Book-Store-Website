@@ -2,6 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
@@ -11,6 +15,9 @@ import Dashboard from './Components/Dashboard/Dashboard';
 import Orders from './Components/Orders/Orders';
 import Cart from './Components/Cart/Cart';
 import Checkout from './Components/Cheout/Checkout';
+import { Toaster } from 'react-hot-toast';
+
+const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
   {
@@ -45,6 +52,9 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router}></RouterProvider>
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router}></RouterProvider>
+      <Toaster></Toaster>
+    </QueryClientProvider>
   </React.StrictMode >
 )
