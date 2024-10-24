@@ -28,7 +28,7 @@ const UserProfile = ({ currentUser }) => {
                             <ul className="list-none p-2">
                                 {userRoutes.map((route) => (
                                     <li key={route.id}>
-                                        <NavLink
+                                        <NavLink onClick={() => setIsDropdownOpen(false)}   
                                             to={route.path}
                                             className={({ isActive }) =>
                                                 `block p-2 hover:bg-gray-200 ${isActive ? 'bg-gray-200 font-bold' : ''}`
