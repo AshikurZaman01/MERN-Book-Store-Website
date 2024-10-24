@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
 
 const Categories = ({ books, isLoading, error, setSelectedCategory }) => {
+    const [selectedCategory, setSelected] = useState("");
+
     // Use Set to remove duplicate categories and spread into an array
     const categories = [...new Set(books?.map(book => book.category))];
 
-
     const handleCatChange = (event) => {
-        const selectedCategory = event.target.value;
-        setSelectedCategory(selectedCategory);
+        const category = event.target.value;
+        setSelected(category);
+        setSelectedCategory(category);
     };
-
 
     return (
         <div>
@@ -18,13 +19,18 @@ const Categories = ({ books, isLoading, error, setSelectedCategory }) => {
                     name="category"
                     id="category"
                     onChange={handleCatChange}
+                    value={selectedCategory}
                     className="border bg-[#EAEAEA] border-gray-300 rounded-md px-4 pb-2 focus:outline-none"
                 >
                     <option value="" className="text-gray-500" disabled>
                         Choose a Genre
                     </option>
                     {categories.map((category, index) => (
-                        <option key={index} value={category}>
+                        <option
+                            key={index}
+                            value={category}
+                            className={selectedCategory === category ? "bg-blue-500 text-white" : ""}
+                        >
                             {isLoading ? (
                                 <div className="skeleton h-4 w-full"></div>
                             ) : (

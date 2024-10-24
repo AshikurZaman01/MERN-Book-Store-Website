@@ -4,6 +4,7 @@ import Categories from "./Categories/Categories";
 import BookList from "./BookList/BookList";
 import { useState } from "react";
 
+
 const TopSeller = () => {
 
 
@@ -19,6 +20,7 @@ const TopSeller = () => {
 
     return (
         <div>
+
             <div className="pt-10">
                 <h2 className="text-3xl font-semibold mb-6">Top Sellers</h2>
             </div>
@@ -29,7 +31,9 @@ const TopSeller = () => {
             </div>
             {/* category filtering */}
 
-           
+            {/* Book List */}
+            <BookList books={books} isLoading={isLoading} error={error} selectedCategory={selectedCategory}></BookList>
+            {/* Book List */}
 
         </div>
     )
