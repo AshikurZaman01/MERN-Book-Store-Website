@@ -48,7 +48,6 @@ const CheckoutForm = ({ cartItems, totalPrice }) => {
         }
 
         setErrorMessage('');
-        console.log(checkOutDetails);
 
 
         const newOrder = {
@@ -63,8 +62,10 @@ const CheckoutForm = ({ cartItems, totalPrice }) => {
             },
             phone: checkOutDetails.phn,
             productIds: cartItems.map((item) => item._id),
-            totalPrice : totalPrice
+            totalPrice: totalPrice
         }
+
+        console.log(newOrder);
 
     };
 
@@ -101,7 +102,6 @@ const CheckoutForm = ({ cartItems, totalPrice }) => {
                                 id="email"
                                 className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                                 placeholder="email@domain.com"
-                                disabled
                             />
                         </div>
 
@@ -180,7 +180,9 @@ const CheckoutForm = ({ cartItems, totalPrice }) => {
                             />
                         </div>
 
-                        {errorMessage && <p className="text-red-500 font-semibold">{errorMessage}</p>}
+                        <div className="w-[300px] md:w-[500px]">
+                            {errorMessage && <p className="text-red-500 font-semibold w-[100%]">{errorMessage}</p>}
+                        </div>
 
                         <div className="md:col-span-5 mt-3">
                             <div className="inline-flex items-center">
