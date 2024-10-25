@@ -16,6 +16,8 @@ import Orders from './Components/Orders/Orders';
 import Cart from './Components/Cart/Cart';
 import Checkout from './Components/Cheout/Checkout';
 import { Toaster } from 'react-hot-toast';
+import Login from './Components/Login/Login';
+import Register from './Components/Register/Register';
 
 const queryClient = new QueryClient()
 
@@ -39,6 +41,14 @@ const router = createBrowserRouter([
       {
         path: "/checkout",
         element: <Checkout></Checkout>
+      },
+      {
+        path: "/login",
+        element: <Login></Login>
+      },
+      {
+        path: "/register",
+        element: <Register></Register>
       },
       {
         path: "/dashboard",

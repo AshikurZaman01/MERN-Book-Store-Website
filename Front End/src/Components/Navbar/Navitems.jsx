@@ -1,14 +1,11 @@
-import { FiUser } from "react-icons/fi";
 import { IoHeartOutline } from "react-icons/io5";
 import { BsCart4 } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import UserProfile from "./UserProfile/UserProfile";
 
 const Navitems = () => {
-    const currentUser = true;
+    const currentUser = false;
 
- 
 
     return (
         <div className="flex items-center md:gap-5 gap-3">
