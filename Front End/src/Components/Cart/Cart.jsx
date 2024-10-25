@@ -1,14 +1,25 @@
 import { Link } from 'react-router-dom'
 import getImageURL from '../../Utils/getImageURL'
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { crearCart, removeFromCart } from '../../Redux/features/Cart/cartSlice';
 
 const Cart = () => {
 
+    const dispatch = useDispatch();
     const { cartItems } = useSelector((state) => state.cart);
 
-    const handleClearCart = () => { }
+    const totalPrice = cartItems.reduce((acc, item) => acc + item.newPrice, 0).toFixed(2);
 
-    const totalPrice = 0
+    const handleClearCart = () => {
+        dispatch(crearCart());
+    }
+
+    const handleRemoveFromCart = (product) => {
+        dispatch(removeFromCart({ _id: product._id }));
+    }
+
+
+
 
     return (
         <div>

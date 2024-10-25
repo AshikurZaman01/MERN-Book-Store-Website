@@ -19,10 +19,21 @@ const cartSlice = createSlice({
             } else {
                 toast.error('Item already in cart');
             }
+        },
+        removeFromCart: (state, action) => {
+            state.cartItems = state.cartItems.filter((item) => item._id !== action.payload._id);
+            toast.success('Item removed from cart');
 
+        },
+        crearCart: (state) => {
+            state.cartItems = [];
+            toast.success('Cart cleared');
         }
     }
+
+
+
 })
 
-export const { addToCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, crearCart } = cartSlice.actions;
 export default cartSlice.reducer;
