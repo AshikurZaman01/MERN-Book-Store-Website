@@ -83,10 +83,10 @@ const News = () => {
                                     <p>{item.description}</p>
                                 </div>
                                 <div>
-                                    <img 
+                                    <img
                                         src={item.image}
                                         alt={item.title}
-                                        style={{ width: '300px', height: '200px', objectFit: 'cover' , borderRadius: '5px'}}
+                                        style={{ width: '300px', height: '200px', objectFit: 'cover', borderRadius: '5px' }}
                                     />
                                 </div>
                             </div>
