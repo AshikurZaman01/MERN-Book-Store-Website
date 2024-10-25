@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const DBConnection = async () => {
     try {
 
-        await mongoose.connect('mongodb://localhost:27017/CTAPP')
+        await mongoose.connect('mongodb://localhost:27017/BookStore-App')
             .then(() => {
                 console.log('Connected to database')
             })
