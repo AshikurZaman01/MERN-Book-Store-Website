@@ -7,9 +7,9 @@ const Checkout = () => {
     const dispatch = useDispatch();
     const { cartItems } = useSelector((state) => state.cart);
 
-    const totalPrice = cartItems.reduce((acc, item) => acc + item.newPrice, 0).toFixed(2);
+    const totalPrice = cartItems.reduce((acc, item) => acc + (item.newPrice * item.quantity), 0).toFixed(2);
 
-    const currentUser = true;
+
 
     return (
         <section>
@@ -24,7 +24,7 @@ const Checkout = () => {
                         </div>
 
                         <div className="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
-                            <CheckoutForm></CheckoutForm>
+                            <CheckoutForm cartItems={cartItems} totalPrice={totalPrice}></CheckoutForm>
                         </div>
                     </div>
                 </div>

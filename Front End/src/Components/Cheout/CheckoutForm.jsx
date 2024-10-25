@@ -1,6 +1,9 @@
 import { useState } from "react";
 
-const CheckoutForm = () => {
+const CheckoutForm = ({ cartItems, totalPrice }) => {
+
+    const currentUser = true;
+
     const [checkOutDetails, setCheckOutDetails] = useState({
         name: '',
         phn: '',
@@ -32,7 +35,7 @@ const CheckoutForm = () => {
 
         if (!isChecked) {
             setErrorMessage("You must agree to the Terms & Conditions and Shopping Policy.");
-            return; // Prevent form submission
+            return;
         }
 
         const emptyFields = Object.entries(checkOutDetails)
@@ -41,12 +44,28 @@ const CheckoutForm = () => {
 
         if (emptyFields.length > 0) {
             setErrorMessage(`Please provide a value for: ${emptyFields.join(', ')}`);
-            return; // Prevent form submission
+            return;
         }
 
-        setErrorMessage(''); // Clear any previous error messages
+        setErrorMessage('');
         console.log(checkOutDetails);
-        // Proceed with form submission logic here
+
+
+        const newOrder = {
+            name: checkOutDetails.name,
+            email: currentUser?.email,
+            address: {
+                city: checkOutDetails.city,
+                country: checkOutDetails.country,
+                state: checkOutDetails.state,
+                street: checkOutDetails.street,
+                zipCode: checkOutDetails.zipCode
+            },
+            phone: checkOutDetails.phn,
+            productIds: cartItems.map((item) => item._id),
+            totalPrice : totalPrice
+        }
+
     };
 
     return (
@@ -82,6 +101,7 @@ const CheckoutForm = () => {
                                 id="email"
                                 className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                                 placeholder="email@domain.com"
+                                disabled
                             />
                         </div>
 
