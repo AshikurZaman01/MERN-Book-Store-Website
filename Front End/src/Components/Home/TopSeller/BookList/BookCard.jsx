@@ -1,10 +1,16 @@
 import { FiShoppingCart } from 'react-icons/fi';
 import { Link } from 'react-router-dom'
 import getImageURL from '../../../../Utils/getImageURL';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../../../Redux/features/Cart/cartSlice';
 
 const BookCard = ({ book, isLoading }) => {
 
-    console.log(getImageURL(book.coverImage))
+    const dispatch = useDispatch();
+
+    const handleAddToCart = (book) => {
+        dispatch(addToCart(book));
+    }
 
     return (
         <div className=" rounded-lg transition-shadow duration-300">

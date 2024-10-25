@@ -18,6 +18,8 @@ import Checkout from './Components/Cheout/Checkout';
 import { Toaster } from 'react-hot-toast';
 import Login from './Components/Login/Login';
 import Register from './Components/Register/Register';
+import { Provider } from 'react-redux'
+import store from './Redux/store';
 
 const queryClient = new QueryClient()
 
@@ -62,9 +64,11 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router}></RouterProvider>
-      <Toaster></Toaster>
-    </QueryClientProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router}></RouterProvider>
+        <Toaster></Toaster>
+      </QueryClientProvider>
+    </Provider>
   </React.StrictMode >
 )
