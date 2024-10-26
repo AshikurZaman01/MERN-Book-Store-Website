@@ -25,14 +25,12 @@ const cartSlice = createSlice({
             const item = state.cartItems.find(item => item._id === action.payload._id);
             if (item) {
                 item.quantity += 1;
-                toast.success('Quantity increased');
             }
         },
         decreaseQuantity: (state, action) => {
             const item = state.cartItems.find(item => item._id === action.payload._id);
             if (item && item.quantity > 1) {
                 item.quantity -= 1;
-                toast.success('Quantity decreased');
             }
         },
         removeFromCart: (state, action) => {

@@ -5,6 +5,8 @@ const DBConnection = require('./config/DBconnection');
 const { notFound, defaultErrorHandler } = require('./Middlewear/ErrorHandler/errorHandler');
 const app = express();
 const port = 3000;
+const dotenv = require('dotenv');
+dotenv.config();
 
 app.use(cors({
     origin: "http://localhost:5173",
@@ -22,6 +24,8 @@ app.get("/", (req, res) => {
 });
 
 
+// Routes
+app.use('/api/books', require('./Routes/BookRoute/bookRoute'));
 
 // Error handling middlewares
 app.use(notFound);
