@@ -3,12 +3,13 @@ import { useQuery } from "@tanstack/react-query"
 import Categories from "./Categories/Categories";
 import BookList from "./BookList/BookList";
 import { useState } from "react";
+import { useFetchAllBooksQuery } from "../../../Redux/features/book/bookApi";
 
 
 const TopSeller = () => {
 
     const [selectedCategory, setSelectedCategory] = useState('Choose a Genre');
-
+    {/*
     const { data: books, isLoading, error } = useQuery({
         queryKey: ['books'],
         queryFn: async () => {
@@ -16,7 +17,9 @@ const TopSeller = () => {
             return res.data
         }
     })
+    */}
 
+    const { data: books = [] } = useFetchAllBooksQuery();
 
     return (
         <div>
@@ -27,12 +30,12 @@ const TopSeller = () => {
 
             {/* category filtering */}
             <div>
-                <Categories books={books} isLoading={isLoading} error={error} setSelectedCategory={setSelectedCategory}></Categories>
+                <Categories books={books.data} setSelectedCategory={setSelectedCategory}></Categories>
             </div>
             {/* category filtering */}
 
             {/* Book List */}
-            <BookList books={books} isLoading={isLoading} error={error} selectedCategory={selectedCategory}></BookList>
+            <BookList books={books.data} selectedCategory={selectedCategory}></BookList>
             {/* Book List */}
 
         </div>

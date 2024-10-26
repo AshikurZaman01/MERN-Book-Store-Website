@@ -1,28 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Pagination, Navigation } from 'swiper/modules';
 import BookCard from "../Home/TopSeller/BookList/BookCard";
+import { useFetchAllBooksQuery } from "../../Redux/features/book/bookApi";
 
 const RecommendedBooks = () => {
-    const { data: books, isLoading, error } = useQuery({
-        queryKey: ['books'],
-        queryFn: async () => {
-            const res = await axios.get('/Data/data.json');
-            return res.data;
-        },
-    });
+    const { data: books = [] } = useFetchAllBooksQuery();
 
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error loading books: {error.message}</div>;
-    }
+    const bookList = books.data || [];
 
     return (
         <div>
@@ -49,14 +36,14 @@ const RecommendedBooks = () => {
                 modules={[Pagination, Navigation]}
                 className="mySwiper"
             >
-                {books && books.length > 0 ? (
-                    books.slice(8, 20).map(book => (
+                {bookList.length > 0 ? (
+                    bookList.slice(8, 20).map(book => (
                         <SwiperSlide key={book._id}>
                             <BookCard book={book} />
                         </SwiperSlide>
                     ))
                 ) : (
-                    <div>No books available.</div>
+                    <div className="text-center">No books available.</div>
                 )}
             </Swiper>
         </div>
