@@ -1,5 +1,3 @@
-import axios from "axios"
-import { useQuery } from "@tanstack/react-query"
 import Categories from "./Categories/Categories";
 import BookList from "./BookList/BookList";
 import { useState } from "react";

@@ -20,6 +20,7 @@ import Login from './Components/Login/Login';
 import Register from './Components/Register/Register';
 import { Provider } from 'react-redux'
 import store from './Redux/store';
+import SingleBook from './Components/Home/TopSeller/BookList/SingleBook';
 
 const queryClient = new QueryClient()
 
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
+      },
+      {
+        path: "/books/:id",
+        element: <SingleBook></SingleBook>
       },
       {
         path: "/orders",
