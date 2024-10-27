@@ -10,8 +10,7 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
-    const [loading, setLoading] = useState(false);
-
+    const [loading, setLoading] = useState(true); // Set loading to true initially
 
     const registerUser = async (email, password) => {
         return createUserWithEmailAndPassword(auth, email, password);
@@ -33,25 +32,14 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
             setCurrentUser(user);
-            setLoading(false);
-
-            if (user) {
-                const { email, displayName, photoURL } = user;
-
-                const userData = {
-                    email,
-                    userName: displayName,
-                    photo: photoURL
-                }
-            }
+            setLoading(false); // Set loading to false after checking the user state
         });
 
         return () => unsubscribe();
     }, []);
 
-
     return (
-        <AuthContext.Provider value={{ currentUser, loading, setLoading, registerUser, loginUser, signInWithGoogle, logout }}>
+        <AuthContext.Provider value={{ currentUser, loading, registerUser, loginUser, signInWithGoogle, logout }}>
             {children}
         </AuthContext.Provider>
     );

@@ -26,6 +26,7 @@ app.get("/", (req, res) => {
 
 // Routes
 app.use('/api/books', require('./Routes/BookRoute/bookRoute'));
+app.use('/api/orders', require('./Routes/OrderROutes/OrderRoutes'));
 
 // Error handling middlewares
 app.use(notFound);
