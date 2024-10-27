@@ -6,19 +6,19 @@ import { toast } from "react-hot-toast";
 import { FaSpinner } from "react-icons/fa";
 
 const Register = () => {
-
     const [errorMessage, setErrorMessage] = useState('');
-    const { registerUser, loading, setLoading } = useAuth();
+    const { registerUser } = useAuth(); // Removed loading state from here
     const navigate = useNavigate();
 
     const [user, setUser] = useState({
         email: '',
         password: ''
-    })
+    });
+    const [loading, setLoading] = useState(false); // Local loading state
 
     const handleOnChange = (e) => {
-        setUser({ ...user, [e.target.name]: e.target.value })
-    }
+        setUser({ ...user, [e.target.name]: e.target.value });
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -26,18 +26,17 @@ const Register = () => {
         // Validate input
         if (!user.email) {
             setErrorMessage('Please enter your email');
-            return; // Early return if there's an error
+            return; 
         }
         if (!user.password) {
             setErrorMessage('Please enter your password');
-            return; // Early return if there's an error
+            return; 
         }
 
         setErrorMessage(''); // Clear previous errors
-        setLoading(true); // Start loading immediately on submit
+        setLoading(true); // Start loading
 
         try {
-            // Attempt to register the user
             const result = await registerUser(user.email, user.password);
             if (result.user) {
                 toast.success('Registration Successful');
@@ -46,13 +45,11 @@ const Register = () => {
             }
         } catch (error) {
             console.error(error);
-            setErrorMessage(error.message);
+            setErrorMessage(error.message || 'Registration failed. Please try again.');
         } finally {
-            setLoading(false);
+            setLoading(false); // Stop loading
         }
     };
-
-
 
     return (
         <div className="h-[calc(100vh-120px)] flex justify-center items-center bg-gray-100">
@@ -85,11 +82,11 @@ const Register = () => {
                             className="shadow-sm border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
-                    <div >
+                    <div>
                         {errorMessage && <div className="text-red-500 text-xs italic mb-3 text-center font-bold">{errorMessage}</div>}
                     </div>
                     <div>
-                        <button className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded focus:outline-none transition duration-200">
+                        <button className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded focus:outline-none transition duration-200" disabled={loading}>
                             {loading ? <FaSpinner className="animate-spin mx-auto" /> : "Register"}
                         </button>
                     </div>
@@ -102,10 +99,10 @@ const Register = () => {
                     </Link>
                 </p>
 
-                <RegisterWithGoogle></RegisterWithGoogle>
+                <RegisterWithGoogle />
             </div>
         </div>
     );
 };
 
-export default Register
+export default Register;

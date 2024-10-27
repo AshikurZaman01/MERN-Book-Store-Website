@@ -28,10 +28,9 @@ const RegisterWithGoogle = () => {
                 onClick={handleGoogleSignIn}
                 className="w-full flex justify-center items-center bg-secondary hover:bg-blue-700 text-white font-bold py-2 rounded focus:outline-none transition duration-200"
             >
-                {loading ? <FaSpinner className="animate-spin" /> :
-                    <span className="flex  items-center">  <FaGoogle className="mr-2" />
-                        <span>Sign in with Google</span></span>
-                }
+
+                <span className="flex  items-center">  <FaGoogle className="mr-2" />
+                    <span>Sign in with Google</span></span>
             </button>
         </div>
     );

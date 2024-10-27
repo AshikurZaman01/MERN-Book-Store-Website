@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
-
     name: {
         type: String,
         required: true
@@ -11,16 +10,23 @@ const orderSchema = new mongoose.Schema({
         required: true
     },
     address: {
+        street: {
+            type: String,
+            required: true
+        },
         city: {
             type: String,
             required: true
         },
         country: String,
         state: String,
-        zipcode: String
+        zipcode: {
+            type: String,
+            required: true
+        }
     },
     phone: {
-        type: Number,
+        type: String, 
         required: true
     },
     productIds: [
@@ -34,8 +40,7 @@ const orderSchema = new mongoose.Schema({
         type: Number,
         required: true
     }
-
-}, { timestamps: true })
+}, { timestamps: true });
 
 const OrderModel = mongoose.model("Order", orderSchema);
 module.exports = OrderModel;

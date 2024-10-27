@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 
 const Login = () => {
 
-    const { loginUser, loding, setLoading } = useAuth();
+    const { loginUser, loading, setLoading } = useAuth();
     const navigate = useNavigate();
 
     const [errorMessage, setErrorMessage] = useState('');
@@ -23,34 +23,30 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!user.email) {
-            setErrorMessage('Please enter your email');
-        } else if (!user.password) {
-            setErrorMessage('Please enter your password');
-        } else {
-            setErrorMessage('');
+        // Validate input
+        if (!user.email || !user.password) {
+            setErrorMessage(!user.email ? 'Please enter your email' : 'Please enter your password');
+            return;
         }
 
-        setLoading(true)
-        setErrorMessage('')
+        setErrorMessage('');
+        setLoading(true); // This should now work
 
         try {
-            await loginUser(user.email, user.password)
-                .then((result) => {
-                    if (result.user) {
-                        toast.success('Login Successfully')
-                    }
-                    navigate('/')
-                    setUser({
-                        email: '',
-                        password: ''
-                    })
-                })
+            const result = await loginUser(user.email, user.password);
+            if (result.user) {
+                toast.success('Login Successfully');
+                navigate('/');
+                setUser({ email: '', password: '' });
+            }
         } catch (error) {
-            console.log(error)
-            setErrorMessage('Something went wrong')
+            console.log(error);
+            setErrorMessage('Something went wrong');
+        } finally {
+            setLoading(false);
         }
-    }
+    };
+
 
     return (
         <div className="h-[calc(100vh-120px)] flex justify-center items-center bg-gray-100">

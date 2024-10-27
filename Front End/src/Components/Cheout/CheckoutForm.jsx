@@ -1,22 +1,24 @@
 import { useState } from "react";
+import { useAuth } from "../../Context/AuthContext";
+import { useCreateOrderMutation } from "../../Redux/features/Order/orderApi";
+import toast from "react-hot-toast";
 
 const CheckoutForm = ({ cartItems, totalPrice }) => {
-
-    const currentUser = true;
-
+    const { currentUser } = useAuth();
     const [checkOutDetails, setCheckOutDetails] = useState({
-        name: '',
+        name: currentUser?.displayName || '',
         phn: '',
         street: '',
         city: '',
         country: '',
         state: '',
         zipCode: '',
-        email: ''
+        email: currentUser?.email || ''
     });
 
     const [isChecked, setIsChecked] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [createOrder, { isLoading }] = useCreateOrderMutation();
 
     const onChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -30,7 +32,7 @@ const CheckoutForm = ({ cartItems, totalPrice }) => {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (!isChecked) {
@@ -49,24 +51,38 @@ const CheckoutForm = ({ cartItems, totalPrice }) => {
 
         setErrorMessage('');
 
-
         const newOrder = {
             name: checkOutDetails.name,
-            email: currentUser?.email,
+            email: checkOutDetails.email,
             address: {
+                street: checkOutDetails.street,
                 city: checkOutDetails.city,
                 country: checkOutDetails.country,
                 state: checkOutDetails.state,
-                street: checkOutDetails.street,
-                zipCode: checkOutDetails.zipCode
+                zipcode: checkOutDetails.zipCode
             },
             phone: checkOutDetails.phn,
             productIds: cartItems.map((item) => item._id),
             totalPrice: totalPrice
+        };
+
+        try {
+            await createOrder(newOrder).unwrap();
+            toast.success('Order placed successfully!');
+            setCheckOutDetails({
+                name: '',
+                city: '',
+                country: '',
+                state: '',
+                street: '',
+                zipCode: '',
+                phn: '',
+                email: currentUser?.email || ''
+            });
+            setIsChecked(false);
+        } catch (error) {
+            setErrorMessage(error.message || "Failed to place order");
         }
-
-        console.log(newOrder);
-
     };
 
     return (
@@ -75,7 +91,6 @@ const CheckoutForm = ({ cartItems, totalPrice }) => {
                 <div className="text-gray-600">
                     <p className="font-medium text-lg">Personal Details</p>
                     <p>Please fill out all the fields.</p>
-
                 </div>
 
                 <div className="lg:col-span-2">
@@ -100,6 +115,7 @@ const CheckoutForm = ({ cartItems, totalPrice }) => {
                                 type="email"
                                 name="email"
                                 id="email"
+                                disabled
                                 className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                                 placeholder="email@domain.com"
                             />
@@ -201,8 +217,8 @@ const CheckoutForm = ({ cartItems, totalPrice }) => {
                         </div>
 
                         <div className="md:col-span-5 text-right">
-                            <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded" type="submit">
-                                Place an Order
+                            <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded" type="submit" disabled={isLoading}>
+                                {isLoading ? 'Placing Order...' : 'Place an Order'}
                             </button>
                         </div>
                     </div>

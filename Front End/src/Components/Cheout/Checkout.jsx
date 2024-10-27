@@ -1,12 +1,9 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import CheckoutForm from './CheckoutForm';
 
 const Checkout = () => {
 
-    const dispatch = useDispatch();
     const { cartItems } = useSelector((state) => state.cart);
-
     const totalPrice = cartItems.reduce((acc, item) => acc + (item.newPrice * item.quantity), 0).toFixed(2);
 
 
