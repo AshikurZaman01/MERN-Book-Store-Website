@@ -3,9 +3,11 @@ import { BsCart4 } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import UserProfile from "./UserProfile/UserProfile";
 import { useSelector } from "react-redux";
+import { useAuth } from "../../Context/AuthContext";
 
 const Navitems = () => {
-    const currentUser = false;
+
+    const { currentUser } = useAuth();
 
     const { cartItems } = useSelector((state) => state.cart);
 

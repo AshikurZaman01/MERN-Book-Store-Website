@@ -1,16 +1,30 @@
 import { useState } from 'react';
 import { FiUser } from 'react-icons/fi';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../Context/AuthContext';
+import toast from 'react-hot-toast';
 
 const UserProfile = ({ currentUser }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const navigate = useNavigate();
+
+    const { logout } = useAuth();
+
+    const handleSignOut = () => {
+        logout();
+        toast.success('You have been logged out successfully!');
+        navigate('/login');
+    };
 
     const userRoutes = [
         { id: 1, name: 'Dashboard', path: '/dashboard' },
         { id: 2, name: 'Orders', path: '/orders' },
         { id: 3, name: 'Cart Page', path: '/cart' },
         { id: 4, name: 'Check Out', path: '/checkout' },
+        { id: 5, name: 'Sign Out', action: handleSignOut },
     ];
+
+
 
     return (
         <div>
@@ -28,14 +42,27 @@ const UserProfile = ({ currentUser }) => {
                             <ul className="list-none p-2">
                                 {userRoutes.map((route) => (
                                     <li key={route.id}>
-                                        <NavLink onClick={() => setIsDropdownOpen(false)}   
-                                            to={route.path}
-                                            className={({ isActive }) =>
-                                                `block p-2 hover:bg-gray-200 ${isActive ? 'bg-gray-200 font-bold' : ''}`
-                                            }
-                                        >
-                                            {route.name}
-                                        </NavLink>
+                                        {route.action ? (
+                                            <button
+                                                onClick={() => {
+                                                    route.action();
+                                                    setIsDropdownOpen(false);
+                                                }}
+                                                className="block w-full text-left p-2 hover:bg-gray-200"
+                                            >
+                                                {route.name}
+                                            </button>
+                                        ) : (
+                                            <NavLink
+                                                onClick={() => setIsDropdownOpen(false)}
+                                                to={route.path}
+                                                className={({ isActive }) =>
+                                                    `block p-2 hover:bg-gray-200 ${isActive ? 'bg-gray-200 font-bold' : ''}`
+                                                }
+                                            >
+                                                {route.name}
+                                            </NavLink>
+                                        )}
                                     </li>
                                 ))}
                             </ul>
