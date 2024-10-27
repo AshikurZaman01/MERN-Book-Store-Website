@@ -1,8 +1,13 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import RegisterWithGoogle from "./RegisterWithGoogle";
+import { useAuth } from "../../Context/AuthContext";
+import toast from "react-hot-toast";
 
 const Login = () => {
+
+    const { loginUser, loding, setLoading } = useAuth();
+    const navigate = useNavigate();
 
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -15,7 +20,7 @@ const Login = () => {
         setUser({ ...user, [e.target.name]: e.target.value })
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (!user.email) {
@@ -26,7 +31,25 @@ const Login = () => {
             setErrorMessage('');
         }
 
-        console.log(user);
+        setLoading(true)
+        setErrorMessage('')
+
+        try {
+            await loginUser(user.email, user.password)
+                .then((result) => {
+                    if (result.user) {
+                        toast.success('Login Successfully')
+                    }
+                    navigate('/')
+                    setUser({
+                        email: '',
+                        password: ''
+                    })
+                })
+        } catch (error) {
+            console.log(error)
+            setErrorMessage('Something went wrong')
+        }
     }
 
     return (

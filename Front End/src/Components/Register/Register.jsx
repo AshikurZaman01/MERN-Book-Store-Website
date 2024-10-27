@@ -46,9 +46,8 @@ const Register = () => {
             }
         } catch (error) {
             console.error(error);
-            setErrorMessage(error.message); // Handle error message
+            setErrorMessage(error.message);
         } finally {
-            // Ensure loading is reset after the operation completes
             setLoading(false);
         }
     };
