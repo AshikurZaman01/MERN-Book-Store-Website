@@ -22,6 +22,7 @@ import { Provider } from 'react-redux'
 import store from './Redux/store';
 import SingleBook from './Components/Home/TopSeller/BookList/SingleBook';
 import { AuthProvider } from './Context/AuthContext';
+import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
 
 const queryClient = new QueryClient()
 
@@ -36,19 +37,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/books/:id",
-        element: <SingleBook></SingleBook>
+        element: <PrivateRoute><SingleBook></SingleBook></PrivateRoute>
       },
       {
         path: "/orders",
-        element: <Orders></Orders>
+        element: <PrivateRoute><Orders></Orders></PrivateRoute>
       },
       {
         path: "/cart",
-        element: <Cart></Cart>
+        element: <PrivateRoute><Cart></Cart></PrivateRoute>
       },
       {
         path: "/checkout",
-        element: <Checkout></Checkout>
+        element: <PrivateRoute><Checkout></Checkout></PrivateRoute>
       },
       {
         path: "/login",
@@ -60,7 +61,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: <Dashboard></Dashboard>
+        element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>
       }
 
     ]
