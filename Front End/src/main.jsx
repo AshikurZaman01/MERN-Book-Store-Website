@@ -21,6 +21,7 @@ import Register from './Components/Register/Register';
 import { Provider } from 'react-redux'
 import store from './Redux/store';
 import SingleBook from './Components/Home/TopSeller/BookList/SingleBook';
+import { AuthProvider } from './Context/AuthContext';
 
 const queryClient = new QueryClient()
 
@@ -71,7 +72,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router}></RouterProvider>
+        <AuthProvider>
+          <RouterProvider router={router}></RouterProvider>
+        </AuthProvider>
         <Toaster></Toaster>
       </QueryClientProvider>
     </Provider>
