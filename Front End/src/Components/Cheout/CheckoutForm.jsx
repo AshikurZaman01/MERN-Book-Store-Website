@@ -2,9 +2,12 @@ import { useState } from "react";
 import { useAuth } from "../../Context/AuthContext";
 import { useCreateOrderMutation } from "../../Redux/features/Order/orderApi";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutForm = ({ cartItems, totalPrice }) => {
     const { currentUser } = useAuth();
+    const navigate = useNavigate();
+
     const [checkOutDetails, setCheckOutDetails] = useState({
         name: currentUser?.displayName || '',
         phn: '',
@@ -80,6 +83,7 @@ const CheckoutForm = ({ cartItems, totalPrice }) => {
                 email: currentUser?.email || ''
             });
             setIsChecked(false);
+            navigate('/orders');
         } catch (error) {
             setErrorMessage(error.message || "Failed to place order");
         }
